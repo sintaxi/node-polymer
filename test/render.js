@@ -111,6 +111,23 @@ describe("render(path, callback)", function(){
       })
     })
 
+    it("should have mixes partials with locals for nunjucks as well", function(done){
+      poly.render("index.nunjucks", function(error, body){
+        should.not.exist(error)
+        should.exist(body)
+        body.should.include("<h1>Hello</h1>")
+        body.should.include("<h2>Hello World</h2>")
+        body.should.include("<h2>Hello Brazil</h2>")
+        body.should.include("<h2>Hello Canada</h2>")
+        body.should.include("<h2>Hello Gastown</h2>")
+        body.should.include("<h2>Hello Greece</h2>")
+        body.should.include("<p>I really enjoy my stay at Athens</p>")
+        body.should.include("<h2>Title</h2>")
+        body.should.include("<p>Content</p>")
+        done()
+      })
+    })
+
     it("should not render file with underscore", function(done){
       poly.render("_places/brazil.jade", function(error, body){
         should.not.exist(error)

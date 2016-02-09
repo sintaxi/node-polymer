@@ -6,6 +6,36 @@ describe("templates", function(){
   var root = __dirname + "/fixtures/templates"
   var poly = polymer.root(root)
 
+  describe(".nunjucks", function(){
+    it("should render simple flat nunjucks file", function(done){
+      poly.render("nunjucks-sample.nunjucks", function(error, body){
+        should.not.exist(error)
+        should.exist(body)
+        body.should.include("Hello Nunjucks!")
+        done()
+      })
+    })
+    
+    it("should be configured to extend and include another files", function(done) {
+      poly.render("nunjucks/index.nunjucks", function(error, body){
+        should.not.exist(error)
+        should.exist(body)
+        body.should.include("<h1>Nunjucks</h1>")
+        body.should.include("<p>This is a sample file.</p>")
+        done()
+      })
+    })
+    
+    it("should bypass layout rendering", function(done) {
+      poly.render("nunjucks/index.nunjucks", function(error, body){
+        should.not.exist(error)
+        body.should.not.include('This layout file should be ignored.')
+        done()
+      })
+    })
+    
+  })
+
   describe(".ejs", function(){
     it("should render ejs file", function(done){
       poly.render("bio.ejs", function(error, body){
